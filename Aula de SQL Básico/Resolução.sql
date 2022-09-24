@@ -1,3 +1,5 @@
+-- Autor: Andrei Pochmann Koenich
+
 drop table if exists escalacoes ; 
 drop table if exists voos ;
 drop table if exists aeroportos ;
