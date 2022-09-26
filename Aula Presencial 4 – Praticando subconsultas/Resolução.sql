@@ -73,8 +73,8 @@ where idadep > 60
 update paciente
 set idadep = idadep+1
 where pront in (select pront
-				from paciente natural join consulta
-				where data = '03/03')
+		from paciente natural join consulta
+		where data = '03/03')
 		
 -- 2 Compare
 -- a) Remova as consultas que ocorreram na data 03/03
@@ -86,8 +86,8 @@ where data = '03/03'
 
 delete from consulta
 where pront in (select pront
-				from consulta natural join medico
-				where especialidade = 'geriatria')
+		from consulta natural join medico
+		where especialidade = 'geriatria')
 
 -- 3. O nome dos médicos que
 -- a. atenderam crianças (criança <= 12 anos)
@@ -102,8 +102,8 @@ order by nome_medico
 select distinct nomem as nome_medico
 from medico
 where crm not in (select crm
-				  from consulta natural join paciente
-				  where idadep <= 12)
+		  from consulta natural join paciente
+		  where idadep <= 12)
 order by nome_medico
 
 -- c. só atenderam crianças
@@ -111,8 +111,8 @@ order by nome_medico
 select distinct nomem as nome_medico
 from medico
 where crm not in (select crm
-				  from consulta natural join paciente
-				  where idadep > 12)
+		  from consulta natural join paciente
+		  where idadep > 12)
 order by nome_medico
 				  
 -- d. atenderam crianças e adultos (adulto >=21)
@@ -120,8 +120,8 @@ order by nome_medico
 select distinct nomem as nome_medico
 from medico natural join consulta natural join paciente 
 where idadep <= 12 and crm in (select crm 
-							   from consulta natural join paciente 
-							   where idadep >= 21)
+			       from consulta natural join paciente 
+			       where idadep >= 21)
 order by nome_medico
 				  
 -- 4. Compare
@@ -138,8 +138,8 @@ order by nome_paciente
 select distinct nomep as nome_paciente, especialidade
 from paciente natural join consulta natural join medico 
 where pront in (select pront 
-				from consulta natural join medico 
-				where especialidade = 'endocrinologia')
+		from consulta natural join medico 
+		where especialidade = 'endocrinologia')
 order by nome_paciente
 
 -- 5. O nome dos pacientes que foram atendidos por
@@ -156,9 +156,9 @@ order by nome_paciente
 select distinct nomep as nome_paciente
 from paciente natural join consulta
 where crm in (select crm
-			  from medico natural join consulta
-			  group by crm
-			  having count(distinct pront) >= 3)
+	      from medico natural join consulta
+	      group by crm
+	      having count(distinct pront) >= 3)
 order by nome_paciente
 
 -- 8. Compare
@@ -176,8 +176,8 @@ order by nome_medico
 select distinct nomem as nome_medico, count(distinct pront)
 from medico natural join consulta
 where especialidade = 'pediatria' and pront in (select pront 
-												from consulta natural join medico 
-												where especialidade != 'pediatria')
+						from consulta natural join medico 
+						where especialidade != 'pediatria')
 group by crm, nomem
 
 -- 9. o nome dos médicos que atenderam pacientes mais velhos que a idade média dos pacientes
@@ -186,8 +186,8 @@ group by crm, nomem
 select distinct nomem as nome_medico
 from medico natural join consulta
 where pront in (select pront 
-				from paciente 
-				where idadep > (select avg(idadep) 
-								from paciente natural join consulta natural join medico 
-								where especialidade = 'pediatria'))
+		from paciente 
+		where idadep > (select avg(idadep) 
+				from paciente natural join consulta natural join medico 
+				where especialidade = 'pediatria'))
 order by nome_medico
