@@ -93,7 +93,7 @@ where nomed like 'calculo%'
 -- disciplinas, e número total alunos (distintos) envolvidos (ordenar por nome de professor).
 
 select distinct professor, count(distinct codd) as total_disciplinas, count(coda) as total_matriculas, count(distinct coda) as total_alunos 
-from Disciplinas natural join Matriculas natural join Alunos
+from Matriculas right join Disciplinas using (codd)
 group by professor
 order by professor
 
