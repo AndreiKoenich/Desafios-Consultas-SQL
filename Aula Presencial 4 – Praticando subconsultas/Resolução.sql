@@ -156,7 +156,7 @@ order by nome_paciente
 select distinct nomep as nome_paciente
 from paciente natural join consulta
 where crm in (select crm
-	      from medico natural join consulta
+	      from consulta
 	      group by crm
 	      having count(distinct pront) >= 3)
 order by nome_paciente
