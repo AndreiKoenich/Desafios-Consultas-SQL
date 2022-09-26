@@ -201,7 +201,7 @@ order by nome_musica, downloads
 
 select distinct nomem as nome_musica, downloads
 from musica
-order by downloads, nome_musica desc
+order by downloads desc
 
 -- a música com maior número de downloads
 
