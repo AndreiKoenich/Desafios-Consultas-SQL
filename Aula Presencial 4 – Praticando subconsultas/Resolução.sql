@@ -73,7 +73,7 @@ where idadep > 60
 update paciente
 set idadep = idadep+1
 where pront in (select pront
-		from paciente natural join consulta
+		from consulta
 		where data = '03/03')
 		
 -- 2 Compare
