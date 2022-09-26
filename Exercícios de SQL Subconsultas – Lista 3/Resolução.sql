@@ -70,23 +70,23 @@ insert into consultas values ('p4', 'm4', '2021-02-02');
 select nomee as nome_especialidade
 from especialidades
 where code not in (select code 
-				   from especialidades natural join medicos)
+		   from especialidades natural join medicos)
 order by nome_especialidade
 
 -- 2) remover todos os médicos obstetras;
 
 delete from medicos
 where codm in (select codm 
-			   from medicos natural join especialidades 
-			   where nomee = 'obstetra')
+	       from medicos natural join especialidades 
+	       where nomee = 'obstetra')
 
 -- 3) alterar o código de todos os médicos pediatras para e6
 
 update medicos
 set code = 'e6'
 where crm in (select codm 
-			  from medicos natural join especialidades 
-			  where nomee = 'pediatra')
+	      from medicos natural join especialidades 
+	      where nomee = 'pediatra')
 
 -- 4) o nome de todos os pacientes que consultaram o médico que recebe o maior salario
 -- dentre os médicos
@@ -94,7 +94,7 @@ where crm in (select codm
 select distinct nomep as nome_paciente
 from pacientes natural join consultas natural join medicos
 where salario = (select max(salario) 
-				 from medicos)
+	         from medicos)
 order by nome_paciente
 
 -- 5) o nome e a especialidade dos médicos que ganham acima da média salarial dos médicos
@@ -103,7 +103,7 @@ select distinct nomem as nome_medico, nomee as nome_especialidade
 from medicos natural join especialidades
 group by codm, nomem, nomee
 having salario > (select avg(salario) 
-				  from medicos)
+		  from medicos)
 order by nome_medico, nome_especialidade
 
 -- 6) O nome das especialidades cuja média salarial dos médicos daquela especialidade é
@@ -113,7 +113,7 @@ select distinct nomee as nome_especialidade
 from especialidades natural join medicos
 group by code, nomee
 having avg(salario) > (select avg(salario) 
-					   from medicos)
+		       from medicos)
 order by nome_especialidade
 
 -- 7) O nome dos médicos que paulo consultou e que roberto tabém consultou
@@ -121,6 +121,6 @@ order by nome_especialidade
 select distinct nomem as nome_medico
 from medicos natural join consultas natural join pacientes
 where nomep = 'paulo' and codm in (select codm 
-								   from pacientes natural join consultas 
-								   where nomep = 'roberto')
+				   from pacientes natural join consultas 
+				   where nomep = 'roberto')
 order by nome_medico
