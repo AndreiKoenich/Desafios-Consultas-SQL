@@ -140,7 +140,7 @@ where codm in (select codm
 select distinct nomem as nome_musica
 from musica natural join gravacao natural join artista 
 where nomea = 'emicida' and codm in (select codm 
-                                     from musica natural join gravacao natural join artista 
+                                     from gravacao natural join artista 
 				     where nomea = 'rashid')
 order by nome_musica									 
 
@@ -149,7 +149,7 @@ order by nome_musica
 select distinct nomem as nome_musica
 from musica natural join gravacao natural join artista 
 where nomea = 'emicida' and codm not in (select codm 
-                                         from musica natural join gravacao natural join artista 
+                                         from gravacao natural join artista 
 					 where nomea = 'rashid')
 order by nome_musica	
 
@@ -225,7 +225,7 @@ order by nome_artista
 select distinct nomea as nome_artista
 from artista
 where nomea != 'emicida' and coda not in (select coda
-					  from artista natural join gravacao
+					  from gravacao
 			                  where codm in (select codm
 							 from artista natural join gravacao
 							 where nomea = 'emicida'))
