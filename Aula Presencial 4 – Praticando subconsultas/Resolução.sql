@@ -86,7 +86,7 @@ where data = '03/03'
 
 delete from consulta
 where pront in (select pront
-		from consulta natural join medico
+		from medico
 		where especialidade = 'geriatria')
 
 -- 3. O nome dos médicos que
