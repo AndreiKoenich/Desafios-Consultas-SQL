@@ -111,8 +111,8 @@ order by nome_medico
 select distinct nomem as nome_medico
 from medico
 where idadep <= 12 and crm not in (select crm
-		                       from consulta natural join paciente
-		                       where idadep > 12)
+		                   from consulta natural join paciente
+		                   where idadep > 12)
 order by nome_medico
 				  
 -- d. atenderam crianças e adultos (adulto >=21)
