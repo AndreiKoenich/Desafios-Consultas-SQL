@@ -29,7 +29,6 @@ insert into funcionarios values ('f2', 'pedro', 5000);
 insert into funcionarios values ('f3', 'carlos', 7000);
 insert into funcionarios values ('f4', 'pedro', 15000);
 
-
 create table alocacoes
 (codp char(2) not null references projetos,
 codf char(2) not null references funcionarios,
