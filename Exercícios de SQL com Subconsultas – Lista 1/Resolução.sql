@@ -50,10 +50,10 @@ insert into artista  values('a1', 'emicida');
 insert into artista  values('a2', 'rashid');
 insert into artista  values('a3', 'vanessa da mata');
 insert into artista  values('a4', 'pabllo vittar');
-insert into artista values( 'a5', 'luisa sonza');
-insert into artista values( 'a6', 'pedro sampaio');
-insert into artista values( 'a7', 'wesley safadao');
-insert into artista values( 'a8', 'projota');
+insert into artista values('a5', 'luisa sonza');
+insert into artista values('a6', 'pedro sampaio');
+insert into artista values('a7', 'wesley safadao');
+insert into artista values('a8', 'projota');
 
 insert into gravacao values ('m1', 'a1');
 insert into gravacao values ('m1', 'a2');
