@@ -80,8 +80,8 @@ order by aviao
 select distinct nomep as nome_piloto
 from piloto natural join escalacao
 where nomep != 'Paulo' and aviao in (select aviao
-									 from piloto natural join escalacao
-									 where nomep = 'Paulo')
+				     from piloto natural join escalacao
+				     where nomep = 'Paulo')
 order by nome_piloto			
 
 -- c) O nome de pilotos com a aeronave usada, para qualquer aeronave que Paulo não tenha usado.
@@ -89,10 +89,10 @@ order by nome_piloto
 select distinct nomep as nome_piloto
 from piloto natural join escalacao
 where aviao in (select aviao
-				from escalacao
-				where aviao not in (select aviao
-									from piloto natural join escalacao
-									where nomep = 'Paulo'))
+	        from escalacao
+		where aviao not in (select aviao
+				    from piloto natural join escalacao
+				    where nomep = 'Paulo'))
 order by nome_piloto	
 
 -- d) O nome dos pilotos que jamais usaram aeronaves usadas por Paulo.
@@ -100,10 +100,10 @@ order by nome_piloto
 select distinct nomep as nome_piloto
 from piloto
 where nomep not in (select nomep
+		    from piloto natural join escalacao
+		    where aviao in (select aviao
 				    from piloto natural join escalacao
-					where aviao in (select aviao
-									from piloto natural join escalacao
-									where nomep = 'Paulo'))
+				    where nomep = 'Paulo'))
 order by nome_piloto	
 
 -- e) O nome dos pilotos que usaram todas aeronaves usadas por Paulo (e possivelmente outras);
@@ -111,10 +111,10 @@ order by nome_piloto
 select distinct nomep as nome_piloto
 from piloto PILOT
 where nomep != 'Paulo' and not exists (select * 
-									   from piloto natural join escalacao
-									   where nomep = 'Paulo' and aviao not in (select aviao
-																			   from piloto natural join escalacao
-																			   where nomep = PILOT.nomep))
+				       from piloto natural join escalacao
+				       where nomep = 'Paulo' and aviao not in (select aviao
+									       from piloto natural join escalacao
+									       where nomep = PILOT.nomep))
 order by nome_piloto	
 
 -- f) O nome dos pilotos que usaram exatamente as mesmas aeronaves que Paulo usou;
@@ -122,14 +122,14 @@ order by nome_piloto
 select distinct nomep as nome_piloto
 from piloto PILOT natural join escalacao
 where nomep != 'Paulo' and not exists (select * 
-									   from piloto natural join escalacao
-									   where nomep = 'Paulo' and aviao not in (select aviao
-																			   from piloto natural join escalacao
-																			   where nomep = PILOT.nomep))
+				       from piloto natural join escalacao
+				       where nomep = 'Paulo' and aviao not in (select aviao
+									       from piloto natural join escalacao
+									       where nomep = PILOT.nomep))
 group by codp, nomep
 having count(distinct aviao) = (select count(distinct aviao)
-								from piloto natural join escalacao
-								where nomep = 'Paulo')
+				from piloto natural join escalacao
+				where nomep = 'Paulo')
 order by nome_piloto
 
 -- 2) COMPARE
@@ -145,8 +145,8 @@ order by codigo_voo
 select distinct codv as codigo_voo, nomep as nome_piloto
 from piloto natural join escalacao
 where codv in (select codv
-			   from piloto natural join escalacao
-			   where nomep = 'Paulo')
+	       from piloto natural join escalacao
+	       where nomep = 'Paulo')
 order by codigo_voo, nome_piloto
 
 -- c) O código dos voos com os respectivos pilotos escalados, para voos que Paulo não fez.
@@ -154,8 +154,8 @@ order by codigo_voo, nome_piloto
 select distinct codv as codigo_voo, nomep as nome_piloto
 from piloto natural join escalacao
 where codv not in (select codv
-			       from piloto natural join escalacao
-			       where nomep = 'Paulo')
+		   from piloto natural join escalacao
+		   where nomep = 'Paulo')
 order by codigo_voo, nome_piloto
 
 -- d) O nome dos pilotos que fizeram todos os voos para os quais Paulo foi escalado (e possivelmente outros)
@@ -163,11 +163,10 @@ order by codigo_voo, nome_piloto
 select distinct nomep as nome_piloto
 from piloto PILOT
 where nomep != 'Paulo' and not exists (select *
-									   from piloto natural join escalacao
-									   where nomep = 'Paulo' and codv not in (select codv
-																			  from piloto natural join escalacao
-																			  where codp = PILOT.codp))
-									   
+				       from piloto natural join escalacao
+				       where nomep = 'Paulo' and codv not in (select codv
+									      from piloto natural join escalacao
+									      where codp = PILOT.codp))								   
 order by nome_piloto
 
 -- e) O nome dos pilotos que não fizeram nenhum dos voos para os quais Paulo foi escalado;
@@ -175,10 +174,10 @@ order by nome_piloto
 select distinct nomep as nome_piloto
 from piloto PILOT natural join escalacao
 where nomep != 'Paulo' and not exists (select *
-									   from piloto natural join escalacao
-									   where nomep = 'Paulo' and codv in (select codv
-																		  from piloto natural join escalacao
-																		  where codp = PILOT.codp))
+				       from piloto natural join escalacao
+				       where nomep = 'Paulo' and codv in (select codv
+									  from piloto natural join escalacao
+								          where codp = PILOT.codp))
 order by nome_piloto
 
 -- f) O nome dos pilotos que fizeram exatamente os mesmos voos para os quais Paulo foi escalado;
@@ -186,13 +185,12 @@ order by nome_piloto
 select distinct nomep as nome_piloto
 from piloto PILOT natural join escalacao
 where nomep != 'Paulo' and not exists (select *
-									   from piloto natural join escalacao
-									   where nomep = 'Paulo' and codv not in (select codv
-																			  from piloto natural join escalacao
-																			  where codp = PILOT.codp))
+				       from piloto natural join escalacao
+				       where nomep = 'Paulo' and codv not in (select codv
+									      from piloto natural join escalacao
+									      where codp = PILOT.codp))
 group by codp, nomep
 having count(distinct codv) = (select count(distinct codv)
-							  from piloto natural join escalacao
-							  where nomep = 'Paulo')
-									   
+			       from piloto natural join escalacao
+			       where nomep = 'Paulo')					   
 order by nome_piloto
