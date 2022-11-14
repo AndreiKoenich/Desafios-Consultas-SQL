@@ -67,7 +67,7 @@ insert into escalacao values('GL330','01/10','p15','A320');
 
 -- CONSULTAS ---------------------------------------------
 
---1) COMPARE
+-- 1) COMPARE
 -- a) Os aviões usados por Paulo (pelo menos uma vez);
 
 select distinct aviao
