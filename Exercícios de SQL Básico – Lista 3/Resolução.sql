@@ -61,22 +61,26 @@ insert into Matriculas(coda, codd, nota) values (3,3,6);
 select nome as nome_aluno
 from Alunos natural join Matriculas
 where nota < 6
+order by nome_aluno
 
 -- 1b) A idade dos alunos que cursam CIC
 
 select idade
 from Alunos join Cursos using (codc)
 where Cursos.nome = 'cic'
+order by idade
 
 -- 2a) O nome de todos os alunos, dos respectivos cursos e o código das disciplinas nas quais se matricularam
 
 select distinct Alunos.nome as nome_aluno, Cursos.nome as nome_curso, codd as codigo_disciplina
 from Alunos natural join Matriculas join Cursos using (codc)
+order by nome_aluno, nome_curso
 
 -- 2b ) O nome de todos os alunos e dos respectivos cursos (incluir no resultado cursos sem alunos)
 
 select distinct Alunos.nome as nome_aluno, Cursos.nome as nome_curso
 from Cursos left join Alunos using (codc)
+order by nome_aluno, nome_curso
 
 -- 2c) O nome de todos os cursos, dos respectivos alunos e das disciplinas nas quais se
 -- matricularam (incluir no resultado cursos mesmo que não tenham alunos, e alunos mesmo que
@@ -84,6 +88,7 @@ from Cursos left join Alunos using (codc)
 
 select distinct Alunos.nome as nome_aluno, Cursos.nome as nome_curso, nomed as nome_disciplina
 from Cursos left join Alunos using (codc) natural left join Matriculas natural left join Disciplinas
+order by nome_aluno, nome_curso
 
 -- 2d) O nome de todas as disciplinas de 4 créditos e código dos alunos matriculados (incluir no
 -- resultado disciplinas sem matrículas).
@@ -91,6 +96,7 @@ from Cursos left join Alunos using (codc) natural left join Matriculas natural l
 select distinct nomed as nome_disciplina, coda as codigo_aluno
 from Disciplinas natural left join Matriculas
 where creditos = 4
+order by nome_disciplina, codigo_aluno
 
 -- 3) O nome dos alunos que fizeram alguma disciplina de Calculo (ex: calculo I, calculo II, calculo
 -- espacial, cálculo avançado, etc). Ordenar alfabeticamente.
@@ -113,6 +119,7 @@ order by nomed, nota
 select Alunos.nome as nome_aluno
 from Alunos join Cursos using (codc) natural join Matriculas natural join Disciplinas
 where Cursos.nome != 'cic' and nomed = 'calculo I'
+order by nome_aluno
 
 -- 6) O nome dos professores e dos alunos aprovados nas disciplinas que ministram, considerando
 -- disciplinas de no mínimo 6 créditos 
@@ -120,33 +127,39 @@ where Cursos.nome != 'cic' and nomed = 'calculo I'
 select distinct professor as nome_professor, Alunos.nome as nome_aluno
 from Disciplinas natural join Matriculas natural join Alunos
 where nota >= 6 and creditos >= 6
+order by nome_professor, nome_aluno
 
 -- 7) O nome das disciplinas nas quais tanto joao quanto maria se matricularam. 
 
 select distinct nomed as nome_disciplina
 from Disciplinas natural join Matriculas natural join Alunos
 where Alunos.nome = 'joao'
+order by nome_disciplina
 
 intersect
 
 select distinct nomed as nome_disciplina
 from Disciplinas natural join Matriculas natural join Alunos
 where Alunos.nome = 'maria'
+order by nome_disciplina
 
 -- 8) O nome das disciplinas nas quais maria se matriculou, e jose não.
 
 select distinct nomed as nome_disciplina
 from Disciplinas natural join Matriculas natural join Alunos
 where Alunos.nome = 'maria'
+order by nome_disciplina
 
 except
 
 select distinct nomed as nome_disciplina
 from Disciplinas natural join Matriculas natural join Alunos
 where Alunos.nome = 'joao'
+order by nome_disciplina
 
 -- 9) O nome das disciplinas nas quais o aluno jose não se matriculou.
 
 select distinct nomed as nome_disciplina
 from Disciplinas natural join Matriculas natural join Alunos
 where Alunos.nome != 'jose'
+order by nome_disciplina
