@@ -80,8 +80,8 @@ order by codigo_disciplina
 select distinct codd as codigo_disciplina, nomep as nome_professor
 from professor natural join matricula
 where nomep != 'jose' and codd in (select codd
-								   from professor natural join matricula
-								   where nomep = 'jose')
+				   from professor natural join matricula
+				   where nomep = 'jose')
 order by codigo_disciplina, nome_professor
 
 -- O código das disciplinas com os respectivos professores, para disciplinas que jose não ministra.
@@ -89,8 +89,8 @@ order by codigo_disciplina, nome_professor
 select distinct codd as codigo_disciplina, nomep as nome_professor
 from professor natural join matricula
 where nomep != 'jose' and codd not in (select codd
-									   from professor natural join matricula
-									   where nomep = 'jose')
+				       from professor natural join matricula
+				       where nomep = 'jose')
 order by codigo_disciplina, nome_professor
 
 -- O nome dos professores que não ministram nenhuma das disciplinas que jose ministra.
@@ -99,9 +99,9 @@ select distinct nomep as nome_professor
 from professor
 where nomep != 'jose' and nomep not in (select nomep
                                         from professor natural join matricula
-										where codd in (select codd
-													   from professor natural join matricula
-													   where nomep = 'jose'))
+					where codd in (select codd
+						       from professor natural join matricula
+						       where nomep = 'jose'))
 order by nome_professor													   
 													   
 -- O nome dos professores que ministram todas as disciplinas que jose ministra (e possivelmente outras)
@@ -109,10 +109,10 @@ order by nome_professor
 select distinct nomep as nome_professor
 from professor PROF
 where nomep != 'jose' and not exists (select *
-									  from professor natural join matricula
-									  where nomep = 'jose' and codd not in (select codd
-									                                        from professor natural join matricula
-																			where codp = PROF.codp))
+				      from professor natural join matricula
+				      where nomep = 'jose' and codd not in (select codd
+						                            from professor natural join matricula
+									    where codp = PROF.codp))
 order by nome_professor
 
 -- O nome dos professores que ministram exatamente as mesmas disciplinas que jose ministra;
@@ -120,12 +120,12 @@ order by nome_professor
 select distinct nomep as nome_professor
 from professor PROF natural join matricula
 where nomep != 'jose' and not exists (select *
-									  from professor natural join matricula
-									  where nomep = 'jose' and codd not in (select codd
-									                                        from professor natural join matricula
-																			where codp = PROF.codp))
+				      from professor natural join matricula
+				      where nomep = 'jose' and codd not in (select codd
+					                                    from professor natural join matricula
+									    where codp = PROF.codp))
 group by codp, nomep
 having count(distinct codd) = (select count(distinct codd)
-							   from professor natural join matricula
-							   where nomep = 'jose')
+			       from professor natural join matricula
+			       where nomep = 'jose')
 order by nome_professor
