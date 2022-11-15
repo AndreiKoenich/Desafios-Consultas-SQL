@@ -66,65 +66,76 @@ insert into gravacao values ('m6', 'a3' );
 select distinct nomeg as nome_genero
 from musica natural join genero
 where ano = '2020'
+order by nome_genero
 
 -- 2) -- o nome de todas as músicas que o emicida gravou
 
 select distinct nomem as nome_musica
 from musica natural join gravacao natural join artista
 where nomea = 'emicida'
+order by nome_musica
 
 -- 3) -- o nome das músicas no gênero rapp
 
 select distinct nomem as nome_musica
 from musica natural join genero
 where nomeg = 'rapp'
+order by nome_musica
 
 -- 4) -- o nome das musicas que comecam com "bum bum"
 
 select distinct nomem as nome_musica
 from musica
 where nomem like 'bum bum%'
+order by nome_musica
 
 -- 5) -- o ano que emicida gravou musicas
 
 select distinct ano
 from artista natural join gravacao natural join musica
 where nomea = 'emicida'
+order by ano
 
 -- 6) -- o nome de todos os artistas, e das músicas que gravaram (artistas sem gravações
 -- devem aparecer no resultado). Ordene por ordem alfabetica de artista
 
 select distinct nomea as nome_artista, nomem as nome_musica
 from artista natural left join gravacao natural left join musica
-order by nome_artista
+order by nome_artista, nome_musica
 
 -- 7) -- o nome das artistas de sexo masculino que gravaram músicas pop
 
 select distinct nomea as nome_artista
 from artista natural join gravacao natural join musica natural join genero
 where sexo = 'm' and nomeg = 'pop'
+order by nome_artista
 
 -- 8) -- o gênero que das musicas que o mc fioti grava
 
-select distinct nomeg
+select distinct nomeg as nome_genero
 from artista natural join gravacao natural join musica natural join genero
 where nomea = 'mc fioti'
+order by nome_genero
 
 -- 9) -- o nome das músicas que o rashid e emicida gravaram
 
 select distinct nomem as nome_musica
 from artista natural join gravacao natural join musica
 where nomea = 'emicida' or nomea = 'rashid'
+order by nome_musica
 
 -- 10) -- O nome dos artistas que não gravaram musicas
 
 select distinct nomea as nome_artista
 from artista natural join gravacao
+order by nome_artista
 except
 select distinct nomea as nome_artista
 from artista natural join gravacao
+order by nome_artista
 
 select distinct nomea as nome_artista
 from artista natural left join gravacao
 group by coda, nomea
 having count(distinct codm) = 0
+order by nome_artista
