@@ -72,6 +72,7 @@ insert into gravacao values ('m7', 'a5' );
 
 select distinct nomeg as nome_genero, nomem as nome_musica
 from genero natural join musica
+order by nome_genero, nome_musica
 
 -- o número de gêneros musicais e de músicas gravadas
 
@@ -84,6 +85,7 @@ from genero natural join musica
 select nomem as nome_musica, nomea as nome_artista
 from artista natural join gravacao natural join musica natural join genero
 where nomeg = 'funk'
+order by nome_musica, nome_artista
 
 -- para o gênero funk, o número de músicas gravadas, e de artistas envolvidos
 
@@ -96,24 +98,28 @@ where nomeg = 'funk'
 
 select distinct nomeg as nome_genero, nomem as nome_musica, downloads
 from genero natural join musica
+order by nome_genero, nome_musica, downloads
 
 -- para cada gênero (nome), o número de músicas e de downloads
 
 select distinct nomeg as nome_genero, count(distinct codm) as total_musicas, sum(downloads) as total_downloads
 from genero natural left join musica
 group by codg, nomeg
+order by nome_genero, total_musicas, total_downloads
 
 -- 4) Compare
 -- para cada artista, o nome e ano das musicas que gravou
 
 select distinct nomea as nome_artista, ano
 from artista natural join gravacao natural join musica
+order by nome_artista, ano
 
 -- para cada artista (nome), o numero de musicas que gravou por ano
 
 select nomea as nome_artista, ano, count(distinct codm) as total_musicas
 from artista natural join gravacao natural join musica
 group by coda, nomea, ano
+order by nome_artista, ano, total_musicas
 
 -- 5) Compare
 -- o ano, genero, e artistas que gravaram o gênero
@@ -135,6 +141,7 @@ order by ano
 select nomeg as nome_generos, sum(downloads) as total_downloads
 from genero natural join musica
 group by codg, nomeg
+order by nome_generos, total_downloads
 
 -- o nome dos gêneros que têm mais de 10.000 downloads
 
@@ -142,6 +149,7 @@ select nomeg as nome_generos, sum(downloads) as total_downloads
 from genero natural join musica
 group by codg, nomeg
 having sum(downloads) > 10000
+order by nome_generos, total_downloads
 
 -- 7) Compare
 -- o nome dos artistas, de suas músicas e número de downloads
@@ -149,6 +157,7 @@ having sum(downloads) > 10000
 select nomea as nome_artista, nomem as nome_musica, downloads
 from artista natural join gravacao natural join musica
 order by nome_artista
+order by nome_artista, nome_musica, downloads
 
 -- o nome dos artistas cujas músicas têm sempre o mesmo número de downloads
 
@@ -172,12 +181,14 @@ order by nome_artista
 select nomem as nome_musica, nomeg as nome_genero, downloads
 from artista natural join gravacao natural join musica natural join genero
 where nomea = 'anitta'
+order by nome_musica, nome_genero, downloads
 
 -- o número de músicas que a anita gravou, o total de gêneros envolvidos e de downloads
 
 select count(distinct codm) as total_musicas, count(distinct codg) as total_generos, sum(downloads) as total_downloads
 from artista natural join gravacao natural join musica
 where nomea = 'anitta'
+order by total_musicas, total_generos, total_downloads
 
 -- 9) Compare
 -- o nome do artista, da música que gravou, e respectivo numero de downloads
@@ -185,6 +196,7 @@ where nomea = 'anitta'
 select nomea as nome_artista, nomem as nome_musica, sum(downloads) as total_downloads
 from artista natural join gravacao natural join musica
 group by coda, nomea, codm, nomem
+order by nome_artista, nome_musica, total_downloads
 
 -- para cada artista, o número de músicas gravadas, o menor e maior número de downloads
 
@@ -199,13 +211,15 @@ order by nome_artista
 select distinct nomeg as nome_genero, nomem as nome_musicas
 from genero natural join musica natural join gravacao natural join artista
 where sexo = 'f'
+order by nome_genero, nome_musicas
 
 -- para cada gênero musical, o número de músicas gravadas por artistas do sexo feminino
 
-select distinct nomeg as nome_genero, count(distinct coda)
+select distinct nomeg as nome_genero, count(distinct coda) as total_musicas
 from genero natural join musica natural join gravacao natural join artista
 where sexo = 'f'
 group by codg, nomeg
+order by nome_genero, total_musicas
 
 -- 11) Compare
 -- os anos nos quais a anitta gravou músicas com mais de 2000 downloads
