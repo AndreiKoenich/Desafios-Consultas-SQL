@@ -111,6 +111,7 @@ select nomea as nome_aluno, count(distinct codd) as total_disciplinas, avg(nota)
 from Alunos natural join Cursos natural join Matriculas natural join Disciplinas
 where nomec = 'cic'
 group by coda, nomea
+order by nome_aluno
 
 -- 7) O nome dos alunos que sempre tiveram no mínimo nota 8 nas disciplinas nas quais se matricularam
 
@@ -118,6 +119,7 @@ select nomea as nome_aluno
 from Alunos natural join Matriculas
 group by coda, nomea
 having min(nota) >= 8
+order by nome_aluno
 
 -- 8) Considerando apenas disciplinas de 4 créditos ou mais, o nome do professor e da disciplina,
 -- desde que a nota mínima dos alunos matriculados tenha 7 ou superior, e a média, 8,5 ou superior.
@@ -127,6 +129,7 @@ from Disciplinas natural join Matriculas natural join Alunos
 where creditos >= 4
 group by codd, nomed
 having min(nota) >= 7 and avg(nota) >= 8.5
+order by professor, nome_disciplina
 
 -- 9) O nome das disciplinas com pelo menos 3 alunos matriculados.
 
@@ -134,6 +137,7 @@ select nomed as nome_disciplina
 from Disciplinas natural join Matriculas
 group by codd, nomed
 having count(distinct coda) >= 3
+order by nome_disciplina
 
 -- 10) O nome dos alunos que nunca tiraram notas iguais nas disciplinas nas quais se matricularam;
 
@@ -141,6 +145,7 @@ select nomea as nome_aluno
 from Alunos natural join Matriculas
 group by coda, nomea
 having count(distinct nota) = count(nota)
+order by nome_aluno
 
 -- 11) O nome dos alunos que sempre tiram a mesma nota;
 
@@ -148,3 +153,4 @@ select nomea as nome_aluno
 from Alunos natural join Matriculas
 group by coda, nomea
 having count(distinct nota) = 1
+order by nome_aluno
