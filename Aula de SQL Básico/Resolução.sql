@@ -174,17 +174,17 @@ where (aero_origem.PAIS != aero_destino.PAIS) and (pilotos.PAIS = aero_origem.PA
 -- escalados em 737. Ordene por pais e nome de aeroporto.
 
 select distinct CODV, NOMEA, CIDADE, PAIS
-FROM escalacoes natural join voos join aeroportos on (voos.DEST = aeroportos.CODA)
+from escalacoes natural join voos join aeroportos on (voos.DEST = aeroportos.CODA)
 where AVIAO = '737'
-ORDER BY PAIS, NOMEA
+order by PAIS, NOMEA
 
 -- 2. Os dados do destino (nome do aeroporto, cidade e país) de todos os vôos da Gol. Ordene por pais e
 -- cidade.
 
 select distinct NOMEA, CIDADE, aeroportos.PAIS
-FROM pilotos natural join voos join aeroportos on (voos.DEST = aeroportos.CODA)
+from pilotos natural join voos join aeroportos on (voos.DEST = aeroportos.CODA)
 where COMPANHIA = 'gol'
-ORDER BY PAIS, CIDADE
+order by PAIS, CIDADE
 
 -- 3. Os dados da origem e do destino (para cada um, nome do aeroporto, cidade e pais), de todos os vôos
 -- escalados no aviao 777.
