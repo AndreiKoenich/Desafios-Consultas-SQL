@@ -239,10 +239,10 @@ order by total_anos
 -- 12) Compare
 -- o nome das músicas e o número de artista que gravaram a música
 
-select distinct nomem as nome_musica, count(distinct coda)
+select distinct nomem as nome_musica, count(distinct coda) as numero_artistas
 from musica natural join artista
 group by codm, nomem
-order by nome_musica
+order by nome_musica, numero_artistas
 
 -- o nome das músicas gravadas por mais de um artista
 
