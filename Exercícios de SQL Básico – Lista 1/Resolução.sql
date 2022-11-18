@@ -127,14 +127,6 @@ order by nome_musica
 -- 10) -- O nome dos artistas que não gravaram musicas
 
 select distinct nomea as nome_artista
-from artista natural join gravacao
-order by nome_artista
-except
-select distinct nomea as nome_artista
-from artista natural join gravacao
-order by nome_artista
-
-select distinct nomea as nome_artista
 from artista natural left join gravacao
 group by coda, nomea
 having count(distinct codm) = 0
