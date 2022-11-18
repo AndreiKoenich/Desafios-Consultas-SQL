@@ -3,7 +3,7 @@
 drop table if exists gravacao;
 drop table if exists musica;
 drop table if exists artista;
-drop table if exists genero ;
+drop table if exists genero;
 
 create table genero
 (codg char(3) NOT NULL primary key,
