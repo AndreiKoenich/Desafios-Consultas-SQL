@@ -131,3 +131,55 @@ from artista natural left join gravacao
 group by coda, nomea
 having count(distinct codm) = 0
 order by nome_artista
+
+-- 11) -- o nome do gênero de todas as músicas com pelo menos 3000 downloads
+
+select distinct nomeg as nome_genero
+from genero natural join musicas
+where downloads >= 3000
+order by nome_genero
+
+-- 12) -- o nome dos artistas que gravaram a música 'passarinhos'
+
+select distinct nomea as nome_artista
+from artista natural join gravacao natural join musica
+where nomem = 'passarinhos'
+order by nome_artista
+
+-- 13) -- o nome das músicas cantadas por artistas mc
+
+select distinct nomem as nome_musica
+from artista natural join gravacao natural join musica
+where nomea like 'mc%'
+order by nome_musica
+
+-- 14) -- o nome dos gêneros e das respectivas musicas, ordenadas por gênero (generos não gravados aparecem no resultado)
+
+select distinct nomeg as nome_genero, nomem as nome_musica
+from genero natural left join musica
+order by nome_genero, nome_musica
+
+-- 15) –- o numero de downloads de músicas pop cantadas por artistas de sexo feminino
+
+select distinct downloads
+from artista natural join gravacao natural join musica
+where sexo = 'f' and nomeg = 'pop'
+order by downloads
+
+-- 16) -- o nome dos artistas que gravaram músicas com o emicida
+
+select distinct nomea as nome_artista
+from artista natural join gravacao
+where nomea != 'emicida' and codm in (select codm
+                                      from artista natural join gravacao
+                                      where nomea = 'emicida')
+order by nome_artista               
+
+-- 17) –- o nome dos gêneros que o emicida nao gravou
+
+select distinct nomeg as nome_genero
+from genero
+where codg not in (select codg
+                   from genero natural join musica natural join gravacao natural join artista
+                   where nomea = 'emicida')
+order by nome_genero
