@@ -135,7 +135,7 @@ order by nome_artista
 -- 11) -- o nome do gênero de todas as músicas com pelo menos 3000 downloads
 
 select distinct nomeg as nome_genero
-from genero natural join musicas
+from genero natural join musica
 where downloads >= 3000
 order by nome_genero
 
@@ -162,7 +162,7 @@ order by nome_genero, nome_musica
 -- 15) –- o numero de downloads de músicas pop cantadas por artistas de sexo feminino
 
 select distinct downloads
-from artista natural join gravacao natural join musica
+from genero natural join musica natural join gravacao natural join artista
 where sexo = 'f' and nomeg = 'pop'
 order by downloads
 
