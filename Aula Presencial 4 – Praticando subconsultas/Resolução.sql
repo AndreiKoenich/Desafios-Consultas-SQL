@@ -175,14 +175,14 @@ order by nome_medico, idade_medico
 -- 7.
 -- a) Para cada especialidade, a idade do paciente mais velho
 
-select especialidade, max(idadep) as maior_idade
+select distinct especialidade, max(idadep) as maior_idade
 from medico natural join consulta natural join paciente
 group by especialidade
 order by especialidade, maior_idade
 
 -- b) Para cada especialidade, a média da idade dos médicos
 
-select especialidade, avg(idadem) as media_idade
+select distinct especialidade, avg(idadem) as media_idade
 from medico natural join consulta
 group by especialidade
 order by especialidade, media_idade
@@ -190,7 +190,7 @@ order by especialidade, media_idade
 -- c) O nome das especialidades cuja idade média dos médicos é menor que a idade do paciente
 -- mais velho que atenderam
 
-select especialidade
+select distinct especialidade
 from medico MED
 group by especialidade
 having avg(idadem) < (select max(idadep)
